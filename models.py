@@ -40,17 +40,26 @@ class Decision(models.Model):
         return self.quest.name + ' - ' + self.name
 
 
+#teams
+class Team(models.Model):
+    teamid = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=30, verbose_name='Имя команды', default='Нет команды')
+    
+    def __unicode__(self):
+        return self.name
+
+
 #tokens
 class Token(models.Model):
     tok_hash = models.CharField(max_length=32, default=_createId, unique=True, verbose_name='ID токена') 
     linked_quest = models.ForeignKey(Quest, verbose_name='Ссылка на квест')
     demo = models.BooleanField(default=False, verbose_name='Демо')
     visible = models.BooleanField(default=True, verbose_name='Видимый')
-    team = models.CharField(max_length=32, default="Нет команды")
+    team = models.ForeignKey(Team, verbose_name='Команда')
     decision = models.ForeignKey(Decision, null=True, blank=True, verbose_name='Выбранное решение')
 
     def __unicode__(self):
         demo = ""
         if self.demo:
             demo = "[DEMO] "
-        return demo + self.team + ": " + self.linked_quest.name
+        return demo + self.team.name + ": " + self.linked_quest.name
