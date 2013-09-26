@@ -2,6 +2,7 @@
 
 from django.conf.urls import patterns, include, url
 from django.http import HttpResponse
+from django.shortcuts import redirect
 
 from main.views import home, quest, decision, noway
 from main.reports import scenario, links, gameplay, links_form, gameplay_form
@@ -19,8 +20,9 @@ urlpatterns = patterns('',
     url(r'^admin/report/gameplay/(\w+)$', gameplay),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^robots\.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /", mimetype="text/plain")),
+    url(r'^admin$', lambda r: redirect('/admin/')),
 
+    url(r'^robots\.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /", mimetype="text/plain")),
     url(r'^(\w+)$', quest),
     url(r'^(\w+)/(\w+)$', decision),
 
