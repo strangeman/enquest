@@ -6,12 +6,15 @@ from django.shortcuts import redirect
 
 from main.views import home, quest, decision, noway
 from main.reports import scenario, links, gameplay, links_form, gameplay_form
+from main.ajax import quest_ajax
 
 from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', home, name='home'),
+
+    url(r'^q$', quest_ajax),
 
     url(r'^admin/report/scenario$', scenario),
     url(r'^admin/report/links$', links_form),
@@ -25,6 +28,7 @@ urlpatterns = patterns('',
     url(r'^robots\.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /", mimetype="text/plain")),
     url(r'^(\w+)$', quest),
     url(r'^(\w+)/(\w+)$', decision),
+
 
     url(r'^.+$', noway),
 )
