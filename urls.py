@@ -4,12 +4,13 @@ from django.conf.urls import patterns, include, url
 from django.http import HttpResponse
 from django.shortcuts import redirect
 
-from main.views import home, quest, decision, noway
+from main.views import home, quest, decision, quest_ajax, quest_ajax_test, decision_ajax, badpage
 from main.reports import scenario, links, gameplay, links_form, gameplay_form
-from main.ajax import quest_ajax, quest_ajax_test, decision_ajax
 
 from django.contrib import admin
 admin.autodiscover()
+
+
 
 urlpatterns = patterns('',
     url(r'^$', home, name='home'),
@@ -32,5 +33,6 @@ urlpatterns = patterns('',
     url(r'^(\w+)/(\w+)$', decision),
 
 
-    url(r'^.+$', noway),
+    url(r'^.+$', badpage),
 )
+
