@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 
 from main.views import home, quest, decision, noway
 from main.reports import scenario, links, gameplay, links_form, gameplay_form
-from main.ajax import quest_ajax, quest_ajax_test
+from main.ajax import quest_ajax, quest_ajax_test, decision_ajax
 
 from django.contrib import admin
 admin.autodiscover()
@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^$', home, name='home'),
 
     url(r'^q/(\w+)$', quest_ajax),
+    url(r'^d/(\w+)/(\w+)$', decision_ajax),
     url(r'^test_q_ajax$', quest_ajax_test),
 
     url(r'^admin/report/scenario$', scenario),
