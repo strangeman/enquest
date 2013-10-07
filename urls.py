@@ -4,7 +4,7 @@ from django.conf.urls import patterns, include, url
 from django.http import HttpResponse
 from django.shortcuts import redirect
 
-from main.views import home, quest, decision, quest_ajax, quest_ajax_test, decision_ajax, badpage
+from main.views import home, quest, decision, quest_ajax, quest_ajax_test, decision_ajax, decision_ajax_taken, badpage
 from main.reports import scenario, links, gameplay, links_form, gameplay_form
 
 from django.contrib import admin
