@@ -7,6 +7,7 @@ from django.forms.util import ErrorList
 from django.core.exceptions import ObjectDoesNotExist
 
 from main.models import Token, Quest, Decision
+from main.settings import SITE_ROOT
 
 def write_current_decision(dec_obj,token_obj):
     token_obj.decision = dec_obj
@@ -17,7 +18,7 @@ def noway(is_ajax=False):
     #     return render_to_response('noway_ajax.tmpl')
     # else:
     #     return render_to_response('noway.tmpl')
-    return render_to_response('noway.tmpl', {'is_ajax': is_ajax})
+    return render_to_response('noway.tmpl', {'is_ajax': is_ajax, 'site_root': SITE_ROOT})
 
 def get_quest_response(token, template, is_ajax=False):
     try:
@@ -27,7 +28,7 @@ def get_quest_response(token, template, is_ajax=False):
 
     if is_ajax:
         if token_obj.decision != None and not token_obj.demo:
-            return redirect('/d/'+str(token)+'/'+str(token_obj.decision.dec_hash))
+            return redirect(SITE_ROOT+'/d/'+str(token)+'/'+str(token_obj.decision.dec_hash))
    
     quest = token_obj.linked_quest
     decision_list = Decision.objects.filter(Q(quest=quest))
@@ -37,7 +38,7 @@ def get_quest_response(token, template, is_ajax=False):
         if decision == token_obj.decision:
             check = True
         decision_to_tmpl.append({'text': decision.text, 'dec_hash': decision.dec_hash, 'check': check})
-    return render_to_response(template, {'quest': quest, 'decisions': decision_to_tmpl, 'token': token_obj.tok_hash, 'is_ajax': is_ajax})
+    return render_to_response(template, {'quest': quest, 'decisions': decision_to_tmpl, 'token': token_obj.tok_hash, 'is_ajax': is_ajax, 'site_root': SITE_ROOT})
 
 def get_decision_response(token, dec_hash, template, is_ajax=False):
     try:
@@ -55,13 +56,13 @@ def get_decision_response(token, dec_hash, template, is_ajax=False):
     if token_obj.demo:
         if token_obj.decision != dec_obj:
             write_current_decision(dec_obj,token_obj)
-        return render_to_response(template, {'decision': dec_obj, 'token':token_obj.tok_hash, 'reward_type':dec_obj.reward_type, 'is_ajax': is_ajax})
+        return render_to_response(template, {'decision': dec_obj, 'token':token_obj.tok_hash, 'reward_type':dec_obj.reward_type, 'is_ajax': is_ajax, 'site_root': SITE_ROOT})
 
     if token_obj.decision == None:
         write_current_decision(dec_obj,token_obj)
-        return render_to_response(template, {'decision': dec_obj, 'token':token_obj.tok_hash, 'reward_type':dec_obj.reward_type, 'is_ajax': is_ajax})
+        return render_to_response(template, {'decision': dec_obj, 'token':token_obj.tok_hash, 'reward_type':dec_obj.reward_type, 'is_ajax': is_ajax, 'site_root': SITE_ROOT})
     elif token_obj.decision == dec_obj:
-        return render_to_response(template, {'decision': dec_obj, 'token':token_obj.tok_hash, 'reward_type':dec_obj.reward_type, 'is_ajax': is_ajax})
+        return render_to_response(template, {'decision': dec_obj, 'token':token_obj.tok_hash, 'reward_type':dec_obj.reward_type, 'is_ajax': is_ajax, 'site_root': SITE_ROOT})
     else:
         return noway(is_ajax)
 

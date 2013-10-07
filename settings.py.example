@@ -5,6 +5,9 @@ ROOT = dirname(abspath(__file__)).replace('\\', '/') + '/'
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+#for full paths in ajax requests
+SITE_ROOT = 'http://domain.com'
+
 ADMINS = (
      ('', ''),
 )
