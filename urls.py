@@ -17,6 +17,7 @@ urlpatterns = patterns('',
 
     url(r'^q/(\w+)$', quest_ajax),
     url(r'^d/(\w+)/(\w+)$', decision_ajax),
+    url(r'^dt/(\w+)/(\w+)$', decision_ajax_taken),
     url(r'^test_q_ajax$', quest_ajax_test),
 
     url(r'^admin/report/scenario$', scenario),
