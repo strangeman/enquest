@@ -4,7 +4,7 @@ from django.conf.urls import patterns, include, url
 from django.http import HttpResponse
 from django.shortcuts import redirect
 
-from main.views import home, quest, decision, quest_ajax, quest_ajax_test, decision_ajax, decision_ajax_taken, badpage
+from main.views import home, quest, decision, quest_ajax, quest_ajax_test, decision_ajax, decision_ajax_taken, badpage, clear_decision_ajax
 from main.reports import scenario, links, gameplay, links_form, gameplay_form
 
 from django.contrib import admin
@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     url(r'^d/(\w+)/(\w+)$', decision_ajax),
     url(r'^dt/(\w+)/(\w+)$', decision_ajax_taken),
     url(r'^test_q_ajax$', quest_ajax_test),
+    url(r'^c/(\w+)$', clear_decision_ajax),
 
     url(r'^admin/report/scenario$', scenario),
     url(r'^admin/report/links$', links_form),

@@ -3,7 +3,7 @@
 from django.shortcuts import render_to_response
 
 from main.models import Token, Quest, Decision
-from main.engine import get_quest_response, get_decision_response, noway
+from main.engine import get_quest_response, get_decision_response, noway, clear_decision
 from django.http import HttpResponse
 
 def home(request):
@@ -26,6 +26,9 @@ def decision_ajax_taken(request, token, dec_hash):
 
 def quest_ajax_test(request):
     return render_to_response('test_quest_ajax.tmpl')
+
+def clear_decision_ajax(request, token):
+	return clear_decision(token)
 
 def badpage(request):
     return noway(False)
