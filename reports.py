@@ -7,6 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from main.models import Token, Quest, Decision, Team
 from main.forms import TeamForm, QuestForm
+from main.engine import noway
 
 @user_passes_test(lambda u: u.is_staff, login_url='/admin/', redirect_field_name='')
 def scenario(request):
@@ -33,7 +34,7 @@ def gameplay(request, team):
     try:
         team_obj = Team.objects.get(teamid=team)
     except ObjectDoesNotExist:
-        return noway(request)
+        return noway(False)
     token_list = Token.objects.filter(team=team_obj)
     return render_to_response('gameplay.tmpl', {'tokens': token_list, 'team': team_obj.name, 'host': request.get_host()})
 
@@ -54,6 +55,6 @@ def links(request, quest):
     try:
         quest_obj = Quest.objects.get(id=quest)
     except ObjectDoesNotExist:
-        return noway(request)
+        return noway(False)
     token_list = Token.objects.filter(linked_quest=quest_obj)
     return render_to_response('links.tmpl', {'quest': quest_obj, 'tokens': token_list, 'host': request.get_host()})
